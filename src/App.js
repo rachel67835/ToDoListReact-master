@@ -8,7 +8,8 @@ function App() {
 
   async function getTodos() {
     const todos = await service.getTasks();
-    setTodos(todos);
+    // ודא שהנתונים הם מערך
+    setTodos(Array.isArray(todos) ? todos : []);
   }
 
   async function createOrUpdateTodo(e) {
