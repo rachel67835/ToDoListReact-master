@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiUrl = process.env.REACT_APP_API_URL
-axios.defaults.apiUrl = process.env.REACT_APP_API_URL
+const apiUrl = process.env.REACT_APP_API_URL
+// axios.defaults.apiUrl = process.env.REACT_APP_API_URL
 
 export default {
   getTasks: async () => {
