@@ -7,18 +7,25 @@ function App() {
   const [editingTodoId, setEditingTodoId] = useState(null);
 
   async function getTodos() {
-    const todos = await service.getTasks();
-    // ודא שהנתונים הם מערך
-    setTodos(Array.isArray(todos) ? todos : []);
+    try {
+      const todos = await service.getTasks();
+      // בדוק את סוג הנתונים המתקבלים
+      console.log("Data received from service:", todos);
+      // ודא שהנתונים הם מערך
+      setTodos(Array.isArray(todos) ? todos : []);
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+      setTodos([]); // במקרה של שגיאה, ננקה את רשימת המשימות
+    }
   }
 
   async function createOrUpdateTodo(e) {
     e.preventDefault();
     if (editingTodoId) {
-        await service.updateTaskName(editingTodoId, newTodo);
-        setEditingTodoId(null); // נקה את מצב העריכה
+      await service.updateTaskName(editingTodoId, newTodo);
+      setEditingTodoId(null); // נקה את מצב העריכה
     } else {
-        await service.addTask(newTodo);
+      await service.addTask(newTodo);
     }
     setNewTodo(""); // נקה את שדה הקלט
     await getTodos(); // רענון רשימת המשימות
